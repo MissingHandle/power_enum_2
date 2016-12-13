@@ -166,14 +166,14 @@ module ActiveRecord # :nodoc:
                                  "ActiveRecord::Base"
                                end
           enum_def[:customizations_block] = block
-          @enumeration_defs[camel_name.to_sym] = enum_def   
+          @enumeration_defs[camel_name.to_sym] = enum_def
         end
       end
 
       # Proxies lookups to @enumeration_defs
       def [](arg)
         @enumeration_defs[arg]
-      end            
+      end
     end #class Config
   end #module VirtualEnumerations
 end #module ActiveRecord

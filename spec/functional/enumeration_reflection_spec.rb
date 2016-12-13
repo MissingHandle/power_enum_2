@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe PowerEnum::Reflection::EnumerationReflection do
+describe PowerEnum::EnumerationReflection do
   it 'should add reflection via reassigning reflections hash' do
     Booking.reflections.object_id.should_not == Adapter.reflections.object_id
   end
@@ -29,7 +29,7 @@ describe PowerEnum::Reflection::EnumerationReflection do
         reflection.active_record.should == Booking
         reflection.should respond_to(:counter_cache_column)
         reflection.macro.should == :has_enumerated
-        reflection.should be_kind_of(PowerEnum::Reflection::EnumerationReflection)
+        reflection.should be_kind_of(PowerEnum::EnumerationReflection)
       end
     end
 

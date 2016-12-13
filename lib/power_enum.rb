@@ -7,23 +7,27 @@ require 'testing/rspec'
 # if at all. It is particularly suitable for scenarios where your Rails
 # application is not the only user of the database, such as when it's used for
 # analytics or reporting.
-class PowerEnum < Rails::Engine
-  config.autoload_paths << File.expand_path(File.join(__FILE__, "../"))
+module PowerEnum
+  class Engine < Rails::Engine
+    config.autoload_paths << File.expand_path(File.join(__FILE__, "../"))
 
-  initializer 'power_enum' do
-    ActiveSupport.on_load(:active_record) do
-      include PowerEnum::Enumerated
-      include PowerEnum::HasEnumerated
-      include PowerEnum::Reflection
+    initializer 'power_enum' do
 
-      ActiveRecord::ConnectionAdapters.module_eval do
-        include PowerEnum::Schema::SchemaStatements
+
+      ActiveSupport.on_load(:active_record) do
+        include PowerEnum::Enumerated
+        include PowerEnum::HasEnumerated
+        include PowerEnum::Reflection
+
+        ActiveRecord::ConnectionAdapters.module_eval do
+          include PowerEnum::Schema::SchemaStatements
+        end
+
+        ActiveRecord::Migration::CommandRecorder.class_eval do
+          include PowerEnum::Migration::CommandRecorder
+        end
       end
 
-      ActiveRecord::Migration::CommandRecorder.class_eval do
-        include PowerEnum::Migration::CommandRecorder
-      end
     end
-
   end
 end
